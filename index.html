@@ -2,30 +2,32 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مفاجأة توتي ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مفاجأة توتييي ✨</title>
     
-    <!-- خطوط جوجل: تجوال للنصوص وكايرو للعناوين -->
+    <!-- خطوط جوجل (Tajawal للنصوص و Cairo للعناوين) -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    
     <!-- مكتبة الأيقونات (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* المتغيرات اللونية المطلوبة */
+        /* المتغيرات اللونية (ألوان ناعمة ومبهجة) */
         :root {
             --soft-pink: #ffd1dc;
             --pastel-orange: #ffdfba;
             --soft-yellow: #fdfd96;
             --white: #ffffff;
             --text-dark: #5c4a52;
-            --accent: #ff9a9e;
+            --accent: #ff6b81;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -37,131 +39,260 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* لمنع التمرير بسبب حركة الخلفية */
+            overflow: hidden; /* إخفاء التمرير لاحتواء تأثيرات الخلفية */
             color: var(--text-dark);
             position: relative;
         }
 
-        /* أنيميشن تدرج الخلفية */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* لوحة الكانفاس للخلفية التفاعلية */
-        #canvas-bg {
+        /* حاوية الأشكال العائمة في الخلفية */
+        #particles-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0;
+            pointer-events: none;
         }
 
-        /* الحاوية الرئيسية (تأثير الزجاج) */
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            animation: floatUp linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* الحاوية الزجاجية الرئيسية */
         .glass-container {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
             border-radius: 30px;
             padding: 40px 30px;
             text-align: center;
-            max-width: 600px;
-            width: 90%;
+            max-width: 550px;
+            width: 92%;
             z-index: 1;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
             font-family: 'Cairo', sans-serif;
-            font-size: 2.5rem;
-            color: #ff6b81;
+            font-size: 2.2rem;
+            color: var(--accent);
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
         }
 
         .teaser-text {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 500;
         }
 
-        /* العداد التنازلي */
+        /* ---- شريط بطارية الانتظار ---- */
+        .battery-section {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .battery-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .battery-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .battery-body {
+            width: 85%;
+            height: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 4px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .battery-cap {
+            width: 8px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px 0 0 4px; /* الاتجاه لليسار لأن الصفحة RTL */
+            margin-right: 2px;
+        }
+
+        .battery-fill {
+            height: 100%;
+            width: 0%; /* سيتغير برمجياً */
+            background: linear-gradient(90deg, #ff9a9e, #fecfef, #fdfd96);
+            border-radius: 6px;
+            transition: width 2.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 15px rgba(255, 154, 158, 0.6);
+        }
+
+        .battery-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #5c4a52;
+            text-shadow: 0 0 5px rgba(255,255,255,0.9);
+        }
+
+        /* ---- العداد التنازلي ---- */
         .countdown-wrapper {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 35px;
-            flex-wrap: wrap;
+            width: 100%;
         }
 
         .time-box {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 15px;
-            padding: 15px;
-            min-width: 80px;
-            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.2);
+            padding: 12px 5px;
+            flex: 1;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.15);
         }
 
         .time-box span {
             display: block;
             font-family: 'Cairo', sans-serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: #ff6b81;
+            color: var(--accent);
         }
 
         .time-box .label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-dark);
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
-        /* زر البصمة / القفل */
-        .lock-btn {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+        /* ---- زر البصمة التفاعلي (Long Press) ---- */
+        .fingerprint-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fingerprint-btn {
+            position: relative;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             border: none;
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: white;
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(255, 107, 129, 0.4);
             transition: all 0.3s ease;
-            animation: pulse 2s infinite;
+            outline: none;
+            /* منع تحديد النص عند الضغط المطول في الجوال */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            user-select: none;
+            overflow: hidden;
+            animation: idlePulse 2s infinite;
         }
 
-        .lock-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(255, 107, 129, 0.6);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 154, 158, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 154, 158, 0); }
+        @keyframes idlePulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 154, 158, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 154, 158, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 154, 158, 0); }
         }
 
-        /* النافذة المنبثقة (Modal) */
-        .modal-overlay {
-            position: fixed;
+        /* تأثيرات أثناء الضغط (المسح الضوئي) */
+        .fingerprint-btn.scanning {
+            animation: hapticShake 0.4s infinite;
+            transform: scale(0.95);
+        }
+
+        @keyframes hapticShake {
+            0% { transform: scale(0.95) translate(1px, 1px) rotate(0deg); }
+            25% { transform: scale(0.95) translate(-1px, -1px) rotate(-1deg); }
+            50% { transform: scale(0.95) translate(-2px, 0px) rotate(1deg); }
+            75% { transform: scale(0.95) translate(1px, 2px) rotate(0deg); }
+            100% { transform: scale(0.95) translate(1px, -1px) rotate(-1deg); }
+        }
+
+        /* خط المسح الضوئي */
+        .scanner-line {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
+            height: 4px;
+            background: #ffffff;
+            box-shadow: 0 0 15px #ffffff, 0 0 20px #ffdfba;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .fingerprint-btn.scanning .scanner-line {
+            opacity: 1;
+            animation: scanMove 1.5s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { top: 5%; }
+            50% { top: 95%; }
+            100% { top: 5%; }
+        }
+
+        .scan-status {
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-height: 24px;
+            transition: color 0.3s;
+        }
+        
+        .scan-status.loading {
+            color: #ff9a9e;
+            animation: blinkText 1s infinite;
+        }
+
+        @keyframes blinkText {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ---- النافذة المنبثقة (Modal) ---- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -177,8 +308,8 @@
         }
 
         .modal-content {
-            background: var(--white);
-            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px 25px;
             border-radius: 25px;
             max-width: 400px;
             width: 90%;
@@ -197,11 +328,14 @@
             font-family: 'Cairo', sans-serif;
             color: #ff6b81;
             margin-bottom: 15px;
+            font-size: 1.5rem;
         }
 
         .modal-content p {
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            font-weight: 500;
         }
 
         .close-btn {
@@ -211,73 +345,47 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #ccc;
+            color: #aaa;
             cursor: pointer;
             transition: color 0.3s ease;
         }
 
-        .close-btn:hover {
-            color: #ff6b81;
-        }
+        .close-btn:hover { color: var(--accent); }
 
-        /* زر الموسيقى */
-        .music-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            color: #ff6b81;
-            cursor: pointer;
-            z-index: 50;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .music-toggle:hover {
-            background: #ff6b81;
-            color: white;
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* تجاوب الشاشات الصغيرة */
+        /* التجاوب مع شاشات الجوال الصغيرة */
         @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
-            .time-box { min-width: 65px; padding: 10px; }
+            h1 { font-size: 1.8rem; }
+            .teaser-text { font-size: 1rem; }
             .time-box span { font-size: 1.5rem; }
-            .teaser-text { font-size: 1.1rem; }
             .glass-container { padding: 30px 20px; }
+            .fingerprint-btn { width: 80px; height: 80px; font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- موسيقى الخلفية (يمكنك تغيير الرابط لأغنية مفضلة لكم) -->
-    <!-- تم وضع رابط لموسيقى بيانو هادئة مجانية، يجب على المستخدم التفاعل أولاً لتعمل -->
-    <audio id="bg-music" loop>
-        <source src="LOVE.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- زر تشغيل/إيقاف الموسيقى -->
-    <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">
-        <i class="fas fa-music"></i>
-    </button>
-
-    <!-- كانفاس الخلفية التفاعلية -->
-    <canvas id="canvas-bg"></canvas>
+    <!-- حاوية الجزيئات العائمة (خلفية حية) -->
+    <div id="particles-container"></div>
 
     <!-- الحاوية الرئيسية -->
     <div class="glass-container">
-        <h1>أهلاً توتي (توتا) ✨🎈</h1>
+        <h1>أهلاً توتيييييييي ✨🎈</h1>
         
         <p class="teaser-text">
-            هنا تنطبخ مفاجأة خاصة جداً لألطف وأحن أخت وصديقة في الدنيا! هذا المكان مغلق حالياً ويثير الفضول.. ولن يُفتح إلا في يومك المميز.
+            هنا تنطبخ مفاجأة خاصة جداً لألطف وأحن واحلى أخت وصديقة في الدنيا!
         </p>
+
+        <!-- بطارية اكتمال المفاجأة -->
+        <div class="battery-section">
+            <div class="battery-title">مستوى شحن المفاجأة 🔋</div>
+            <div class="battery-wrapper">
+                <div class="battery-body">
+                    <div class="battery-fill" id="batteryFill"></div>
+                    <span class="battery-text" id="batteryText">0%</span>
+                </div>
+                <div class="battery-cap"></div>
+            </div>
+        </div>
 
         <!-- العداد التنازلي -->
         <div class="countdown-wrapper">
@@ -299,42 +407,99 @@
             </div>
         </div>
 
-        <!-- زر القفل/البصمة -->
-        <button class="lock-btn" onclick="openModal()">
-            <i class="fas fa-fingerprint"></i>
-        </button>
+        <!-- زر البصمة التفاعلي -->
+        <div class="fingerprint-container">
+            <button class="fingerprint-btn" id="fingerprintBtn" oncontextmenu="return false;">
+                <i class="fas fa-fingerprint"></i>
+                <div class="scanner-line"></div>
+            </button>
+            <div class="scan-status" id="scanStatus">اضغطي مطولاً للبصمة</div>
+        </div>
     </div>
 
-    <!-- النافذة المنبثقة (Modal) -->
+    <!-- النافذة المنبثقة (التنبيه) -->
     <div class="modal-overlay" id="myModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">
                 <i class="fas fa-times"></i>
             </button>
-            <h3><i class="fas fa-lock" style="color: #f39c12;"></i> قفل سري!</h3>
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> اكتمل التحقق!</h3>
             <p>
-                عفواً يا توتا! المفتاح السري محمي بكلمة مرور، ولن يتفعل القفل إلا يوم 29/10 في وجود <strong>ليوث</strong>! خليكي مستعدة 🔑✨
+                أهلاً توتي! تم التحقق من البصمة بنجاح.. ولكن مفتاح المفاجأة والأغنية السرية لن ينشطا إلا يوم 29/10 في وجود انا  <strong>ليوث</strong>! خليكي مستعدة 🔑✨
             </p>
         </div>
     </div>
 
-    <!-- كود الجافاسكربت -->
+    <!-- أكواد الجافاسكربت -->
     <script>
-        // ----------------- 1. إعداد العداد التنازلي -----------------
-        function setCountdown() {
-            const now = new Date();
-            let currentYear = now.getFullYear();
-            // تحديد يوم ميلاد تالا
-            let birthdayDate = new Date(`${currentYear}-10-29T00:00:00`);
+        // ---------------- 1. إعداد الخلفية الحية (نجوم وقلوب) ----------------
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const icons = ['✨', '💖', '🎈', '🌸', '💫'];
+            const particleCount = 20; // عدد الأشكال العائمة
 
-            // إذا مر تاريخ 29 أكتوبر هذا العام، احسب للعام القادم
-            if (now.getTime() > birthdayDate.getTime()) {
-                birthdayDate = new Date(`${currentYear + 1}-10-29T00:00:00`);
+            for (let i = 0; i < particleCount; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.innerText = icons[Math.floor(Math.random() * icons.length)];
+                
+                // توزيع عشوائي للأحجام والسرعات والأماكن
+                let size = Math.random() * 15 + 10;
+                let left = Math.random() * 100;
+                let duration = Math.random() * 10 + 10;
+                let delay = Math.random() * 10;
+
+                particle.style.fontSize = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ---------------- 2. العداد التنازلي + شريط البطارية ----------------
+        function initTimers() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // تاريخ ميلاد تالا (الهدف)
+            let targetDate = new Date(`${currentYear}-10-29T00:00:00`);
+            
+            // إذا مر تاريخ 29 أكتوبر، حوّل للعام القادم
+            if (now.getTime() > targetDate.getTime()) {
+                targetDate = new Date(`${currentYear + 1}-10-29T00:00:00`);
             }
 
+            // حساب نسبة شحن البطارية (من تاريخ افتراضي قبل شهرين مثلاً 1 سبتمبر)
+            let startDate = new Date(`${targetDate.getFullYear()}-09-01T00:00:00`).getTime();
+            let totalDuration = targetDate.getTime() - startDate;
+            let passedDuration = now.getTime() - startDate;
+            
+            let progressPercent = (passedDuration / totalDuration) * 100;
+            if (progressPercent > 100) progressPercent = 100;
+            if (progressPercent < 0) progressPercent = 0;
+
+            // تحريك شحن البطارية والنسبة المئوية بعد تحميل الصفحة بثانية
+            setTimeout(() => {
+                document.getElementById('batteryFill').style.width = `${progressPercent}%`;
+                let currentP = 0;
+                let textInterval = setInterval(() => {
+                    if (currentP >= Math.floor(progressPercent)) {
+                        clearInterval(textInterval);
+                        document.getElementById('batteryText').innerText = Math.floor(progressPercent) + '%';
+                    } else {
+                        currentP++;
+                        document.getElementById('batteryText').innerText = currentP + '%';
+                    }
+                }, 25); // سرعة عدّ النسبة
+            }, 500);
+
+            // تحديث العداد التنازلي كل ثانية
             const updateTimer = setInterval(() => {
                 const currentTime = new Date().getTime();
-                const distance = birthdayDate.getTime() - currentTime;
+                const distance = targetDate.getTime() - currentTime;
 
                 if (distance < 0) {
                     clearInterval(updateTimer);
@@ -342,170 +507,85 @@
                     document.getElementById("hours").innerText = "00";
                     document.getElementById("minutes").innerText = "00";
                     document.getElementById("seconds").innerText = "00";
+                    document.getElementById('batteryFill').style.width = "100%";
+                    document.getElementById('batteryText').innerText = "100%";
                     return;
                 }
 
-                // حساب الأيام والساعات والدقائق والثواني
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // إضافة الصفر إذا كان الرقم أقل من 10
                 document.getElementById("days").innerText = days < 10 ? "0" + days : days;
                 document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
                 document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
                 document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
             }, 1000);
         }
-        setCountdown();
+        initTimers();
 
-        // ----------------- 2. تشغيل / إيقاف الموسيقى -----------------
-        const audio = document.getElementById("bg-music");
-        const musicBtn = document.getElementById("musicBtn");
-        let isPlaying = false;
+        // ---------------- 3. تفاعل زر البصمة (الضغط المطول) ----------------
+        const fingerprintBtn = document.getElementById('fingerprintBtn');
+        const scanStatus = document.getElementById('scanStatus');
+        const modal = document.getElementById('myModal');
+        let pressTimer;
+        let isScanning = false;
 
-        function toggleMusic() {
-            if (isPlaying) {
-                audio.pause();
-                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
-            } else {
-                audio.play();
-                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            isPlaying = !isPlaying;
+        function startScan(e) {
+            // منع تكرار الحدث إذا بدأ بالفعل
+            if(isScanning) return; 
+            if(e.type === 'touchstart') e.preventDefault(); // لمنع ظهور قائمة الجوال
+            
+            isScanning = true;
+            fingerprintBtn.classList.add('scanning');
+            scanStatus.classList.add('loading');
+            scanStatus.innerText = "جاري التحقق من هوية توتا... 🔍";
+            
+            // اهتزاز الموبايل إذا كان يدعم ذلك
+            if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+
+            // بعد ثانيتين ونصف من الضغط المتواصل تفتح النافذة
+            pressTimer = setTimeout(() => {
+                scanSuccess();
+            }, 2500);
         }
 
-        // ----------------- 3. النافذة المنبثقة (Modal) -----------------
-        const modal = document.getElementById("myModal");
-        
-        function openModal() {
-            // إضافة تأثير صوتي بسيط عند الضغط (اختياري)
-            const clickSound = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
-            clickSound.volume = 0.5;
-            clickSound.play().catch(e => {}); // التقاط الخطأ إذا كان المتصفح يمنع الصوت
+        function cancelScan() {
+            if (!isScanning) return;
+            clearTimeout(pressTimer);
+            isScanning = false;
+            fingerprintBtn.classList.remove('scanning');
+            scanStatus.classList.remove('loading');
+            scanStatus.innerText = "اضغطي مطولاً للبصمة";
+        }
 
-            modal.classList.add("active");
+        function scanSuccess() {
+            isScanning = false;
+            fingerprintBtn.classList.remove('scanning');
+            scanStatus.classList.remove('loading');
+            scanStatus.innerText = "اكتمل التحقق! ✨";
+            if (navigator.vibrate) navigator.vibrate(200); // اهتزاز نجاح
+            
+            // فتح النافذة المنبثقة
+            modal.classList.add('active');
         }
 
         function closeModal() {
-            modal.classList.remove("active");
+            modal.classList.remove('active');
+            scanStatus.innerText = "اضغطي مطولاً للبصمة";
         }
 
-        // إغلاق النافذة عند الضغط خارجها
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // ----------------- 4. الخلفية التفاعلية (كانفاس) -----------------
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
+        // مستمعات أحداث الماوس واللمس
+        fingerprintBtn.addEventListener('mousedown', startScan);
+        fingerprintBtn.addEventListener('touchstart', startScan, {passive: false});
         
-        // ضبط حجم الكانفاس
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // إلغاء المسح عند إفلات الزر أو تحريك الإصبع بعيداً
+        window.addEventListener('mouseup', cancelScan);
+        fingerprintBtn.addEventListener('mouseleave', cancelScan);
+        fingerprintBtn.addEventListener('touchend', cancelScan);
+        fingerprintBtn.addEventListener('touchmove', cancelScan);
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        });
-
-        // تتبع الماوس أو اللمس
-        let mouse = { x: null, y: null, radius: 100 };
-
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-        window.addEventListener('touchmove', (event) => {
-            mouse.x = event.touches[0].clientX;
-            mouse.y = event.touches[0].clientY;
-        });
-
-        window.addEventListener('mouseout', () => {
-            mouse.x = undefined;
-            mouse.y = undefined;
-        });
-
-        // فئة الجزيئات (Particles) التي سترسم النجوم والقلوب
-        class Particle {
-            constructor(x, y, speedX, speedY, size, icon) {
-                this.x = x;
-                this.y = y;
-                this.speedX = speedX;
-                this.speedY = speedY;
-                this.size = size;
-                this.icon = icon;
-                this.baseX = x;
-                this.baseY = y;
-            }
-
-            draw() {
-                ctx.font = `${this.size}px Arial`;
-                ctx.fillText(this.icon, this.x, this.y);
-            }
-
-            update() {
-                // الحركة العادية
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // الارتداد من الحواف
-                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-
-                // التفاعل مع الماوس (الهروب اللطيف)
-                if (mouse.x != null && mouse.y != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < mouse.radius) {
-                        const forceDirectionX = dx / distance;
-                        const forceDirectionY = dy / distance;
-                        const force = (mouse.radius - distance) / mouse.radius;
-                        
-                        this.x -= forceDirectionX * force * 5;
-                        this.y -= forceDirectionY * force * 5;
-                    }
-                }
-
-                this.draw();
-            }
-        }
-
-        function initParticles() {
-            particlesArray = [];
-            const icons = ['✨', '💖', '🎈', '🌸', '💫'];
-            let numberOfParticles = (canvas.width * canvas.height) / 15000; // كثافة مناسبة
-            
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 15) + 10; // حجم بين 10 و 25
-                let x = Math.random() * (innerWidth - size * 2) + size;
-                let y = Math.random() * (innerHeight - size * 2) + size;
-                let speedX = (Math.random() - 0.5) * 1.5; // حركة بطيئة
-                let speedY = (Math.random() - 0.5) * 1.5;
-                let icon = icons[Math.floor(Math.random() * icons.length)];
-                
-                particlesArray.push(new Particle(x, y, speedX, speedY, size, icon));
-            }
-        }
-
-        function animateParticles() {
-            requestAnimationFrame(animateParticles);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-        }
-
-        initParticles();
-        animateParticles();
     </script>
 </body>
 </html>
