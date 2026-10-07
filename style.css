@@ -1,0 +1,158 @@
+/* ===== استدعاء الخطوط الأصلية ===== */
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
+
+:root {
+    --pink: #ff6b8b;
+    --purple: #9c27b0;
+    --blue: #2196f3;
+    --teal: #00bcd4;
+    --gold: #ffd700;
+    --light: #fff9f9;
+    --dark: #1a1a2e;
+    --gradient-love: linear-gradient(135deg, #ff6b8b 0%, #9c27b0 50%, #2196f3 100%);
+    --gradient-magic: linear-gradient(135deg, #00bcd4 0%, #9c27b0 100%);
+    --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Tajawal', 'El Messiri', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: var(--light);
+    min-height: 100vh; overflow-x: hidden; line-height: 1.6; direction: rtl;
+    -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 { font-family: 'El Messiri', sans-serif; }
+
+.screen {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; padding: 2rem 1.5rem;
+    text-align: center; position: relative;
+}
+
+.section-title { font-size: 2.8rem; color: white; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); margin-bottom: 1rem; }
+.section-desc { font-size: 1.3rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; }
+
+.btn {
+    background: linear-gradient(135deg, #ff4081, #ff5722);
+    color: white; border: none; padding: 1.2rem 2.5rem; font-size: 1.3rem;
+    font-weight: 600; border-radius: 35px; cursor: pointer; transition: var(--transition);
+    box-shadow: 0 15px 35px rgba(255, 64, 129, 0.4); font-family: 'Tajawal', sans-serif; margin-top: 20px;
+}
+.btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 45px rgba(255, 64, 129, 0.6); }
+
+.bounce { animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+#music-btn {
+    position: fixed; bottom: 20px; right: 20px; background: var(--gradient-love); color: white; border: 2px solid white;
+    width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 1000;
+    transition: var(--transition); box-shadow: var(--shadow-medium);
+}
+
+/* ================= 1. شاشة القفل والعداد ================= */
+.lock-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #ff6b8b 0%, #9c27b0 100%);
+    display: flex; justify-content: center; align-items: center; z-index: 9999;
+}
+.lock-content {
+    background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px;
+    padding: 2rem; border: 2px solid rgba(255, 255, 255, 0.2); text-align: center; width: 90%; max-width: 500px;
+}
+.title-lock { font-size: 2.5rem !important; color: var(--gold) !important; margin-bottom: 10px; font-family: 'El Messiri', sans-serif !important; }
+.desc-lock { font-size: 1.2rem; color: white; margin-bottom: 30px; }
+
+.battery-section { margin-bottom: 25px; }
+.battery-title { font-weight: bold; margin-bottom: 10px; color: var(--gold); font-size: 1.2rem;}
+.battery-bar { width: 100%; height: 25px; margin: 0 auto; border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; position: relative; overflow: hidden; background: rgba(0,0,0,0.2); }
+.battery-fill { height: 100%; width: 0%; background: var(--gradient-love); transition: width 1s; }
+.battery-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 1rem; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+
+.countdown-grid { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+.cd-box { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 10px; width: 65px; display: flex; flex-direction: column; }
+.cd-box span { font-size: 1.8rem; font-weight: bold; color: var(--gold); font-family: 'El Messiri', serif; }
+.cd-box small { font-size: 0.9rem; color: white; }
+
+.fingerprint-wrapper {
+    position: relative; width: 100px; height: 100px; margin: 0 auto;
+    background: linear-gradient(135deg, #ff6b8b, #9c27b0); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; cursor: pointer; overflow: hidden;
+    transition: all 0.5s ease; box-shadow: 0 0 40px rgba(255, 107, 139, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2);
+    
+    /* الحماية القصوى لمنع المتصفح من إيقاف اللمس */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none; /* يمنع ظهور قائمة الخيارات في الآيفون */
+    touch-action: none; /* يمنع الشاشة من الاهتزاز أو التمرير عند الضغط */
+    -webkit-tap-highlight-color: transparent;
+}
+.fp-icon { font-size: 3rem; color: white; pointer-events: none; }
+.laser-scanner { position: absolute; top: -10%; left: 0; width: 100%; height: 4px; background: var(--gold); box-shadow: 0 0 15px var(--gold); opacity: 0; pointer-events: none; }
+.fingerprint-wrapper.scanning { transform: scale(0.95); box-shadow: 0 0 60px rgba(255, 107, 139, 0.8), inset 0 0 30px rgba(255, 255, 255, 0.4); }
+.fingerprint-wrapper.scanning .laser-scanner { opacity: 1; animation: scan 1.2s linear infinite; }
+@keyframes scan { 0% { top: -10%; } 50% { top: 110%; } 100% { top: -10%; } }
+.fp-hint { margin-top: 15px; font-size: 1.2rem; color: white; }
+.fp-hint.active { color: var(--gold); animation: pulse 1.5s infinite; }
+
+/* Custom Swal */
+.dark-swal { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important; border: 2px solid rgba(255,255,255,0.2) !important; border-radius: 20px !important; color: white !important; font-family: 'Tajawal', sans-serif !important; }
+.dark-swal-title { color: var(--gold) !important; font-family: 'El Messiri', sans-serif !important; }
+
+/* ================= 2. Clouds & Hero ================= */
+#cloud-section { background: linear-gradient(to bottom, #1a1a2e, #0f3460); position: relative; overflow: hidden; }
+.clouds-bg {
+    position: absolute; top: 0; left: 0; width: 200%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/clouds.png');
+    animation: driftClouds 60s linear infinite; opacity: 0.2; pointer-events: none; z-index: 0;
+}
+@keyframes driftClouds { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.glow-text {
+    font-size: 4rem; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #ffd700 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); margin-bottom: 1.5rem;
+}
+.subtitle { font-size: 1.4rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; line-height: 1.8; }
+
+/* ================= 3. Game Section ================= */
+.difficulty-controls { margin-bottom: 30px; display: flex; gap: 15px; justify-content: center;}
+.diff-btn { background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.2); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-family: 'Tajawal'; transition: var(--transition); }
+.diff-btn.active { background: var(--gradient-love); border-color: transparent; }
+
+.game-container { height: 250px; width: 320px; position: relative; margin: 0 auto 30px; }
+.cups-wrapper { position: relative; width: 100%; height: 100%; }
+.cup-container { position: absolute; width: 80px; height: 120px; bottom: 20px; transition: transform 0.4s ease-in-out; cursor: pointer; z-index: 2; }
+.cup { width: 100%; height: 100%; background: linear-gradient(135deg, #2196f3, #00bcd4); border-radius: 10px 10px 40px 40px; position: relative; transition: transform 0.5s ease; border: 2px solid rgba(255, 255, 255, 0.2); box-shadow: var(--shadow-soft); }
+.cup.lift { transform: translateY(-80px); }
+.gift { position: absolute; bottom: 20px; font-size: 3rem; color: var(--gold); z-index: 1; transition: transform 0.4s ease-in-out; }
+
+/* ================= 4. Cards ================= */
+.cards-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 900px; margin: 0 auto;}
+.card { width: 280px; height: 300px; perspective: 1000px; cursor: pointer; }
+.card-inner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; }
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card-front, .card-back { width: 100%; height: 100%; position: absolute; backface-visibility: hidden; border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.card-front { background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); }
+.card-back { background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 214, 255, 0.9)); color: var(--dark); transform: rotateY(180deg); font-size: 1.2rem; font-weight: bold; line-height: 1.6; }
+
+/* ================= 5. Cake & Finale ================= */
+.cake-box { position: relative; margin-top: 50px; }
+.cake-layer { background: linear-gradient(135deg, #ff4081, #e91e63); border-radius: 10px; margin: 0 auto; position: relative; border: 2px solid rgba(255,255,255,0.2); }
+.cake-layer::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 20px; background: rgba(255,255,255,0.2); border-radius: 10px 10px 50% 50%; }
+.top { width: 120px; height: 60px; z-index: 3; }
+.middle { width: 180px; height: 70px; z-index: 2; margin-top: -10px; background: linear-gradient(135deg, #9c27b0, #673ab7); }
+.bottom { width: 240px; height: 80px; z-index: 1; margin-top: -10px; background: linear-gradient(135deg, #2196f3, #00bcd4); }
+.candle { width: 15px; height: 45px; background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff4081 5px, #ff4081 10px); position: absolute; top: -45px; left: 50%; transform: translateX(-50%); cursor: pointer; z-index: 4; border-radius: 3px;}
+.flame { width: 20px; height: 30px; background: var(--gold); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px var(--gold), 0 0 40px #ff9800; animation: flicker 0.5s infinite alternate; }
+.flame.hidden { display: none; }
+@keyframes flicker { 0% { transform: translateX(-50%) scale(1); opacity: 0.9; } 100% { transform: translateX(-50%) scale(1.1); opacity: 1; } }
+
+.finale-card { background: rgba(255, 107, 139, 0.15); backdrop-filter: blur(10px); border-radius: 25px; padding: 3rem; border: 3px solid rgba(255, 107, 139, 0.3); max-width: 600px; margin: 0 auto; }
+.pulse-heart { animation: pulse 1s infinite alternate; margin-bottom: 20px; }
+@keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+
+@media (max-width: 768px) { .glow-text { font-size: 3rem; } .title-lock { font-size: 2rem !important; } }
