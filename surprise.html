@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مفاجأة توتا 🐾✨</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <link rel="stylesheet" href="surprise.css">
+</head>
+<body class="fade-in">
+
+<!-- خلفية الفقاعات الحية -->
+    <ul class="background-bubbles">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+    <audio id="bgMusic" loop>
+        <source src="Dandelions.mp3" type="audio/mpeg">
+    </audio>
+
+    <nav class="floating-nav">
+        <button id="music-btn" class="nav-btn" onclick="toggleMusic()"><i class="fas fa-music"></i></button>
+        <div class="nav-dots">
+            <div class="dot active" onclick="goToStage(1)"></div>
+            <div class="dot" onclick="goToStage(2)"></div>
+            <div class="dot" onclick="goToStage(3)"></div>
+            <div class="dot" onclick="goToStage(4)"></div>
+            <div class="dot" onclick="goToStage(5)"></div>
+        </div>
+    </nav>
+
+    <main id="main-container">
+        
+        <!-- المرحلة الأولى: التصميم الجديد الرومانسي للأخت -->
+        <section class="stage active" id="stage-1">
+            <div class="glass-box text-center magical-border">
+                <h1 class="glow-text mb-2">🎂 اهليييييين توتي حبيبي 🎂</h1>
+                <p class="subtitle mb-3" style="font-size: 1.3rem;">
+                    يا ألطف وأحن أخت وصديقة في الدنيا 💖<br>
+                    هذا العالم السحري صُنع بكل قططيه مخصوص عشانك😂.. عشان تستاهلي كل حاجة حلوة بتضحكك وتفرح قلبك.
+                </p>
+                <p class="subtitle mb-3" style="color: var(--gold); font-weight: bold;">😘اضغطي على القلووب لتبدأ الرحلة ✨</p>
+                
+                <!-- زر القلب الكبير -->
+                <button class="big-heart-btn" onclick="startJourney()">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- المرحلة الثانية: اللعبة -->
+        <section class="stage" id="stage-2">
+            <div class="glass-box magical-border">
+                <div class="stage-header">
+                    <h2>تحدي ذاكرة القطط 🃏</h2>
+                    <div class="timer-box">⏳ <span id="game-timer">20</span> ث</div>
+                </div>
+                <div class="memory-grid" id="memory-board"></div>
+                <div class="text-center mt-3">
+                    <button class="action-btn hidden" id="next-to-3" onclick="goToStage(3)">افتحي ذكرياتنا ✨</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- المرحلة الثالثة: الذكريات -->
+        <section class="stage" id="stage-3">
+            <div class="glass-box w-100 magical-border">
+                <h2 class="text-center mb-2">ذكريات وأسرار 💌</h2>
+                <p class="text-center subtitle mb-3">اضغطي على البطاقات لاكتشاف الرسائل</p>
+                
+                <div class="cards-grid" id="wisdom-cards"></div>
+                
+                <div class="text-center mt-3">
+                    <button class="action-btn" onclick="goToStage(4)">مفاجأة الكيكة 🎂</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- المرحلة الرابعة: الأمنية السحرية (إرسال للإيميل) -->
+        <section class="stage" id="stage-4">
+            <div class="glass-box text-center relative-box magical-border">
+                <h2 class="glow-text mb-2">تمني أمنية يا توتا ✨</h2>
+                <p class="subtitle mb-3">أطفئي الشموع لتكتبي أمنيتك السرية التي ستصلني في رسالة مسحورة!</p>
+                
+                <div class="cake-container">
+                    <div class="candles" id="candles-container"></div>
+                    <div class="magic-gift-box">
+                        <i class="fas fa-gift gift-icon"></i>
+                    </div>
+                </div>
+
+                <div id="wish-section" class="hidden mt-3">
+                    <input type="text" id="wish-input" class="wish-input" placeholder="اكتبي أمنيتك السرية هنا...">
+                    <button class="action-btn mt-2" onclick="sendWish()">إرسال الأمنية للسماء 🪄</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- المرحلة الخامسة: الرسالة الختامية -->
+        <section class="stage" id="stage-5">
+            <div class="glass-box paper-box">
+                <div class="letter-header">
+                    <i class="fas fa-heart pulse-heart"></i>
+                    <h3 class="letter-title">أميرة أكتوبر توتا</h3>
+                </div>
+                <div class="letter-body" id="typewriter-text"></div>
+                <div class="letter-footer">
+                    <p>أخوكِ ومحبكِ،<br><span class="glow-text">ليوث ✨</span></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="surprise.js"></script>
+</body>
+</html>
